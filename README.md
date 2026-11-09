@@ -34,20 +34,31 @@ From prepared stellar coordinates to cluster images, synthetic augmentation, vis
 <a id="examples"></a>
 ## M67: data, results and explainability
 
+### Stellar maps and radial binning
+
 <table>
-<tr><th>Stellar map</th><th>Synthetic overview</th></tr>
-<tr><td><img src="readme/assets/M67_stars.jpg" alt="M67 stellar map" width="230"></td><td><img src="readme/assets/M67_synthetics_overview.jpg" alt="M67 synthetic overview" width="230"></td></tr>
+<tr><th align="center">Stellar map</th><th align="center">Synthetic overview</th><th align="center">Spatial binning: 16 annuli</th></tr>
+<tr><td align="center"><a href="readme/assets/M67_stars.jpg"><img src="readme/assets/M67_stars.jpg" alt="Stellar map" width="230"></a></td><td align="center"><a href="readme/assets/M67_synthetics_overview.jpg"><img src="readme/assets/M67_synthetics_overview.jpg" alt="Synthetic overview" width="230"></a></td><td align="center"><a href="readme/assets/M67_spatial_dist_best.jpg"><img src="readme/assets/M67_spatial_dist_best.jpg" alt="Spatial binning: 16 annuli" width="230"></a></td></tr>
+<tr><td valign="top">Prepared stellar positions for M67, centred on the cluster. The axes show angular offsets in arcminutes; the central concentration and surrounding field define the spatial distribution used to construct the sky-map input.</td><td valign="top">Overlay of synthetic spatial distributions (magenta) and the real stellar positions (black). This view shows the spatial variation introduced by data augmentation; it is not an additional observation or a feature-attribution heatmap.</td><td valign="top">The same stellar field divided into 16 concentric radial annuli (blue dashed boundaries). Counts within each annular area are used to construct the radial surface-density profile; the circles represent bin boundaries, not separate fitted cluster radii.</td></tr>
 </table>
 
-M67 stellar positions (left) and the synthetic overview (right). Black points and the magenta overlay show the real distribution and synthetic sample overview, respectively; the overlay is not an observational image.
+### Radial density profiles
 
-<p align="center"><img src="readme/assets/king_uncertainty_M67_AM.jpg" alt="M67 King profile: BATEIA-1 and literature" width="340"></p>
+<table>
+<tr><th align="center">King profile: BATEIA-1 and literature</th><th align="center">Observed and synthetic density profiles</th></tr>
+<tr><td align="center"><a href="readme/assets/king_uncertainty_M67_AM.jpg"><img src="readme/assets/king_uncertainty_M67_AM.jpg" alt="King profile: BATEIA-1 and literature" width="340"></a></td><td align="center"><a href="readme/assets/M67_real_and_synthetic_rdp.jpg"><img src="readme/assets/M67_real_and_synthetic_rdp.jpg" alt="Observed and synthetic density profiles" width="340"></a></td></tr>
+<tr><td valign="top">M67 surface density as a function of radius: black data points, the BATEIA-1 King-profile curve (blue dashed) and the literature uncertainty band from Angelo et al. (grey). This is one cluster example; the band does not establish a calibrated predictive interval for arbitrary new clusters.</td><td valign="top">Observed radial densities (red) overlaid with synthetic-profile densities (grey), using 16 radial divisions. The spread visualizes how the synthetic sample varies around the observed profile at each radius; it is not a confidence interval on the regressor predictions.</td></tr>
+</table>
 
-M67 radial density profile: BATEIA-1 fit (blue dashed line), data points (black) and the literature uncertainty band from Angelo et al. (grey). This illustrates one result, not an aggregate performance measure.
+### Explainable AI: extractor families
 
-<p align="center"><img src="readme/assets/heatmap_densenet_m67.jpg" alt="M67 DenseNet: Score-CAM and Ablation-CAM" width="310"></p>
+<table>
+<tr><th align="center">DenseNet: Score-CAM and Ablation-CAM</th><th align="center">ResNet: Score-CAM and Ablation-CAM</th><th align="center">VGG: Score-CAM and Ablation-CAM</th></tr>
+<tr><td align="center"><a href="readme/assets/heatmap_densenet_m67.jpg"><img src="readme/assets/heatmap_densenet_m67.jpg" alt="DenseNet: Score-CAM and Ablation-CAM" width="230"></a></td><td align="center"><a href="readme/assets/heatmap_resnet_M67.jpg"><img src="readme/assets/heatmap_resnet_M67.jpg" alt="ResNet: Score-CAM and Ablation-CAM" width="230"></a></td><td align="center"><a href="readme/assets/heatmap_vgg_M67.jpg"><img src="readme/assets/heatmap_vgg_M67.jpg" alt="VGG: Score-CAM and Ablation-CAM" width="230"></a></td></tr>
+<tr><td valign="top">Input, Score-CAM and Ablation-CAM panels for DenseNet121, DenseNet161 and DenseNet201. The maps show where each extractor responds within M67, with different spatial patterns across network depths and visualization methods.</td><td valign="top">Input, Score-CAM and Ablation-CAM panels for ResNet50, ResNet101 and ResNet152. Compare the locations and spatial extent of the responses across residual-network depths and methods, using the same cluster as the visual reference.</td><td valign="top">Input, Score-CAM and Ablation-CAM panels for VGG13, VGG16 and VGG19. The maps illustrate responses that can extend into off-centre regions; the panels allow inspection of how these patterns differ from the DenseNet and ResNet families.</td></tr>
+</table>
 
-DenseNet explainability for M67: input maps, Score-CAM and Ablation-CAM for DenseNet121, DenseNet161 and DenseNet201. Colours show the spatial responses of the visualization methods; these diagnostics do not by themselves establish physical causality.
+In each family panel, columns are the input, Score-CAM and Ablation-CAM; rows identify the extractor variant. Colours encode relative responses within each visualization. They are diagnostic maps of the visual extractors, not confidence intervals, physical causality or direct parameter-specific explanations of the downstream regressors; colours should not be treated as a common quantitative scale across panels.
 
 The approach targets non-embedded open clusters described by single-component King profiles and inherits the assumptions of its reference labels. The article evaluates MLP and SVR; additional regressors are covered by the dissertation and source.
 

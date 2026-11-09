@@ -34,20 +34,31 @@ Das coordenadas estelares preparadas às imagens, aumento de dados sintéticos, 
 <a id="examples"></a>
 ## M67: dados, resultados e explicabilidade
 
+### Mapas estelares e divisão radial
+
 <table>
-<tr><th>Mapa estelar</th><th>Visão dos sintéticos</th></tr>
-<tr><td><img src="../readme/assets/M67_stars.jpg" alt="M67 stellar map" width="230"></td><td><img src="../readme/assets/M67_synthetics_overview.jpg" alt="M67 synthetic overview" width="230"></td></tr>
+<tr><th align="center">Mapa estelar</th><th align="center">Visão dos sintéticos</th><th align="center">Divisão espacial: 16 anéis</th></tr>
+<tr><td align="center"><a href="../readme/assets/M67_stars.jpg"><img src="../readme/assets/M67_stars.jpg" alt="Mapa estelar" width="230"></a></td><td align="center"><a href="../readme/assets/M67_synthetics_overview.jpg"><img src="../readme/assets/M67_synthetics_overview.jpg" alt="Visão dos sintéticos" width="230"></a></td><td align="center"><a href="../readme/assets/M67_spatial_dist_best.jpg"><img src="../readme/assets/M67_spatial_dist_best.jpg" alt="Divisão espacial: 16 anéis" width="230"></a></td></tr>
+<tr><td valign="top">Posições estelares preparadas para M67, centradas no aglomerado. Os eixos mostram deslocamentos angulares em minutos de arco; a concentração central e o campo circundante definem a distribuição usada para construir a imagem de entrada.</td><td valign="top">Sobreposição das distribuições espaciais sintéticas (magenta) e posições reais (preto). A figura mostra a variação espacial introduzida pelo aumento de dados; não é uma nova observação nem um mapa de atribuição de características.</td><td valign="top">O mesmo campo dividido em 16 anéis radiais concêntricos, delimitados por linhas azuis tracejadas. As contagens por área anular constroem o perfil de densidade superficial; os círculos são limites dos bins, não diferentes raios ajustados do aglomerado.</td></tr>
 </table>
 
-Posições estelares de M67 (esquerda) e visão dos sintéticos (direita). Os pontos pretos e a sobreposição magenta mostram, respectivamente, a distribuição real e a visão da amostra sintética; a sobreposição não é uma imagem observacional.
+### Perfis de densidade radial
 
-<p align="center"><img src="../readme/assets/king_uncertainty_M67_AM.jpg" alt="M67 King profile: BATEIA-1 and literature" width="340"></p>
+<table>
+<tr><th align="center">Perfil de King: BATEIA-1 e literatura</th><th align="center">Perfis de densidade observado e sintéticos</th></tr>
+<tr><td align="center"><a href="../readme/assets/king_uncertainty_M67_AM.jpg"><img src="../readme/assets/king_uncertainty_M67_AM.jpg" alt="Perfil de King: BATEIA-1 e literatura" width="340"></a></td><td align="center"><a href="../readme/assets/M67_real_and_synthetic_rdp.jpg"><img src="../readme/assets/M67_real_and_synthetic_rdp.jpg" alt="Perfis de densidade observado e sintéticos" width="340"></a></td></tr>
+<tr><td valign="top">Densidade superficial de M67 em função do raio: pontos dos dados (preto), curva de King do BATEIA-1 (azul tracejado) e faixa de incerteza da literatura de Angelo et al. (cinza). É um exemplo individual; a faixa não estabelece intervalo preditivo calibrado para novos aglomerados arbitrários.</td><td valign="top">Densidades radiais observadas (vermelho) sobrepostas às dos perfis sintéticos (cinza), com 16 divisões radiais. A dispersão mostra a variação da amostra sintética em torno do perfil observado a cada raio; não é intervalo de confiança das predições dos regressores.</td></tr>
+</table>
 
-Perfil de densidade radial de M67: ajuste BATEIA-1 (azul tracejado), pontos dos dados (preto) e faixa de incerteza da literatura de Angelo et al. (cinza). A figura ilustra um resultado, não uma medida agregada de desempenho.
+### IA Explicável: famílias de extratoras
 
-<p align="center"><img src="../readme/assets/heatmap_densenet_m67.jpg" alt="M67 DenseNet: Score-CAM and Ablation-CAM" width="310"></p>
+<table>
+<tr><th align="center">DenseNet: Score-CAM e Ablation-CAM</th><th align="center">ResNet: Score-CAM e Ablation-CAM</th><th align="center">VGG: Score-CAM e Ablation-CAM</th></tr>
+<tr><td align="center"><a href="../readme/assets/heatmap_densenet_m67.jpg"><img src="../readme/assets/heatmap_densenet_m67.jpg" alt="DenseNet: Score-CAM e Ablation-CAM" width="230"></a></td><td align="center"><a href="../readme/assets/heatmap_resnet_M67.jpg"><img src="../readme/assets/heatmap_resnet_M67.jpg" alt="ResNet: Score-CAM e Ablation-CAM" width="230"></a></td><td align="center"><a href="../readme/assets/heatmap_vgg_M67.jpg"><img src="../readme/assets/heatmap_vgg_M67.jpg" alt="VGG: Score-CAM e Ablation-CAM" width="230"></a></td></tr>
+<tr><td valign="top">Painéis de entrada, Score-CAM e Ablation-CAM para DenseNet121, DenseNet161 e DenseNet201. Os mapas mostram onde cada extratora responde em M67 e como os padrões espaciais variam com a profundidade da rede e o método de visualização.</td><td valign="top">Painéis de entrada, Score-CAM e Ablation-CAM para ResNet50, ResNet101 e ResNet152. Compare localização e extensão espacial das respostas entre profundidades das redes residuais e métodos, mantendo o mesmo aglomerado como referência visual.</td><td valign="top">Painéis de entrada, Score-CAM e Ablation-CAM para VGG13, VGG16 e VGG19. Os mapas ilustram respostas que podem se estender a regiões fora do centro, permitindo inspecionar diferenças em relação às famílias DenseNet e ResNet.</td></tr>
+</table>
 
-Explicabilidade DenseNet para M67: mapas de entrada, Score-CAM e Ablation-CAM para DenseNet121, DenseNet161 e DenseNet201. As cores mostram respostas espaciais dos métodos de visualização; esses diagnósticos não estabelecem causalidade física por si só.
+Em cada painel de família, as colunas são entrada, Score-CAM e Ablation-CAM; as linhas identificam a variante da extratora. As cores representam respostas relativas em cada visualização. São diagnósticos das extratoras visuais, não intervalos de confiança, causalidade física ou explicações diretas de parâmetros dos regressores posteriores; não trate as cores como uma escala quantitativa comum entre painéis.
 
 A abordagem se destina a aglomerados abertos não imersos descritos por perfis de King de componente única e preserva as hipóteses dos rótulos de referência. O artigo avalia MLP e SVR; a dissertação e o código abrangem regressores adicionais.
 
