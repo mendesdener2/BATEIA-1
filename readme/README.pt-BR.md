@@ -90,6 +90,7 @@ Comece com um aglomerado para inspecionar o pré-processamento. A divisão manua
 <a id="docs"></a>
 ## Documentação
 
+- [Análise de dados próprios de aglomerados estelares](../readme/CUSTOM_DATA.pt-BR.md)
 - [Instalação, dados e uso](USAGE.pt-BR.md)
 - [Arquitetura](../readme/ARQUITETURA.md)
 - [Modelos e otimização](../readme/MODELS_GUIDE.pt-BR.md)

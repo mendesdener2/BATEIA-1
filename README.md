@@ -90,6 +90,7 @@ Start with one cluster to inspect preprocessing. The documented manual training 
 <a id="docs"></a>
 ## Documentation
 
+- [Analyse your own stellar cluster data](readme/CUSTOM_DATA.md)
 - [Installation, data and usage](readme/USAGE.md)
 - [Architecture](readme/ARCHITECTURE.md)
 - [Models and optimization](readme/MODELS_GUIDE.md)

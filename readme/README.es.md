@@ -90,6 +90,7 @@ Empiece con un cúmulo para inspeccionar el preprocesamiento. La división manua
 <a id="docs"></a>
 ## Documentación
 
+- [Análisis de datos propios de cúmulos estelares](../readme/CUSTOM_DATA.es.md)
 - [Instalación, datos y uso](USAGE.es.md)
 - [Arquitectura](../readme/ARCHITECTURE.es.md)
 - [Modelos y optimización](../readme/MODELS_GUIDE.es.md)
