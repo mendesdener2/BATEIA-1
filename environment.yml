@@ -1,0 +1,36 @@
+name: bateia
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.12
+  - numpy
+  - pandas
+  - scipy
+  - scikit-learn
+  - matplotlib
+  - imageio
+  - opencv
+  - astropy
+  - joblib
+  - tqdm
+  - pip
+  - pip:
+      # Dependências Google e APIs
+      - google-api-python-client
+      - google-auth-oauthlib
+      - astroquery
+      
+      # Ferramentas auxiliares e visualização
+      - optuna
+      - corner
+      - pillow
+      
+      # Ferramentas de ML e Visão
+      - grad-cam
+      
+      # O PyTorch Nightly com CUDA 12.8 (pode requerer instalação manual extra se o conda falhar)
+      - --extra-index-url https://download.pytorch.org/whl/nightly/cu128
+      - torch
+      - torchvision
+      - torchaudio

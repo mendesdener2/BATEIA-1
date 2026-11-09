@@ -1,0 +1,22 @@
+PARAMETROS_AJUSTE = {
+    "Berkeley98":   {"AjusteRestante": 0.97, "AjusteCentral": 1.3, "AjusteFundoBG": 1.0, "t":41, "t_ideal": 11, "inct_rt": 1.398, "inct_rc": 1.222, "inct_f0": 1.173, "inct_fbg": 1.071},
+    "Haffner13":    {"AjusteRestante": 1.1,  "AjusteCentral": 1.75,"AjusteFundoBG": 1.0, "t":41, "t_ideal": 14, "inct_rt": 1.277, "inct_rc": 1.146, "inct_f0": 1.139, "inct_fbg": 1.125},
+    "NGC129":       {"AjusteRestante": 0.81, "AjusteCentral": 1.6, "AjusteFundoBG": 1.0, "t":41, "t_ideal": 10, "inct_rt": 1.125, "inct_rc": 1.246, "inct_f0": 1.111, "inct_fbg": 1.067},
+    "NGC2266":      {"AjusteRestante": 1.2,  "AjusteCentral": 1,   "AjusteFundoBG": 0.98,"t":41, "t_ideal": 20, "inct_rt": 1.380, "inct_rc": 1.159, "inct_f0": 1.221, "inct_fbg": 1.085},
+    "NGC2422":      {"AjusteRestante": 0.9,  "AjusteCentral": 1.8, "AjusteFundoBG": 0.98,"t":41, "t_ideal": 5,  "inct_rt": 1.374, "inct_rc": 1.180, "inct_f0": 1.111, "inct_fbg": 1.175},
+    "NGC2425":      {"AjusteRestante": 1.3,  "AjusteCentral": 1,   "AjusteFundoBG": 0.85,"t":41, "t_ideal": 13, "inct_rt": 1.129, "inct_rc": 1.200, "inct_f0": 1.134, "inct_fbg": 1.059},
+    "NGC3960":      {"AjusteRestante": 0.95, "AjusteCentral": 1.3, "AjusteFundoBG": 1.0, "t":41, "t_ideal": 10, "inct_rt": 1.237, "inct_rc": 1.211, "inct_f0": 1.123, "inct_fbg": 1.069},
+    "NGC6811":      {"AjusteRestante": 1.15, "AjusteCentral": 1.54,"AjusteFundoBG": 1.0, "t":41, "t_ideal": 7,  "inct_rt": 1.252, "inct_rc": 1.148, "inct_f0": 1.134, "inct_fbg": 1.130},
+    "Ruprecht171":  {"AjusteRestante": 1.35, "AjusteCentral": 1.2, "AjusteFundoBG": 0.35,"t":41, "t_ideal": 21, "inct_rt": 1.166, "inct_rc": 1.217, "inct_f0": 1.161, "inct_fbg": 1.179},
+    "Collinder277": {"AjusteRestante": 1.0,  "AjusteCentral": 1.1, "AjusteFundoBG": 1.0, "t":41, "t_ideal": 17, "inct_rt": 1.301, "inct_rc": 1.167, "inct_f0": 1.145, "inct_fbg": 1.027},
+    "M67":          {"AjusteRestante": 1.5,  "AjusteCentral": 1.3, "AjusteFundoBG": 0.65,"t":41, "t_ideal": 12, "inct_rt": 1.258, "inct_rc": 1.128, "inct_f0": 1.096, "inct_fbg": 1.267},
+    "NGC188":       {"AjusteRestante": 1.0,  "AjusteCentral": 1.5, "AjusteFundoBG": 1.0, "t":41, "t_ideal": 23, "inct_rt": 1.171, "inct_rc": 1.188, "inct_f0": 1.085, "inct_fbg": 1.187},
+    "NGC581":       {"AjusteRestante": 1.2,  "AjusteCentral": 1.3, "AjusteFundoBG": 1.0, "t":41, "t_ideal": 7,  "inct_rt": 1.211, "inct_rc": 1.220, "inct_f0": 1.170, "inct_fbg": 1.034},
+    "NGC2516":      {"AjusteRestante": 0.95, "AjusteCentral": 1.3, "AjusteFundoBG": 1.0, "t":41, "t_ideal": 11, "inct_rt": 1.216, "inct_rc": 1.142, "inct_f0": 1.247, "inct_fbg": 1.046},
+    "NGC3766":      {"AjusteRestante": 1.05, "AjusteCentral": 1.3, "AjusteFundoBG": 0.9, "t":41, "t_ideal": 15, "inct_rt": 1.188, "inct_rc": 1.103, "inct_f0": 1.107, "inct_fbg": 1.047},
+    "NGC6531":      {"AjusteRestante": 1.3,  "AjusteCentral": 1.45,"AjusteFundoBG": 0.8, "t":41, "t_ideal": 7,  "inct_rt": 1.086, "inct_rc": 1.189, "inct_f0": 1.166, "inct_fbg": 1.058},
+    "NGC6940":      {"AjusteRestante": 1.4,  "AjusteCentral": 1.2, "AjusteFundoBG": 0.9, "t":41, "t_ideal": 33, "inct_rt": 1.150, "inct_rc": 1.173, "inct_f0": 1.157, "inct_fbg": 1.143},
+    "NGC7082":      {"AjusteRestante": 0.85, "AjusteCentral": 1.0, "AjusteFundoBG": 1.0, "t":41, "t_ideal": 12, "inct_rt": 1.295, "inct_rc": 1.141, "inct_f0": 1.173, "inct_fbg": 1.034},
+    "NGC6791":      {"AjusteRestante": 1.0,  "AjusteCentral": 1.5, "AjusteFundoBG": 0.63,"t":41, "t_ideal": 20, "inct_rt": 1.266, "inct_rc": 1.162, "inct_f0": 1.104, "inct_fbg": 1.080},
+    "Ruprecht91":   {"AjusteRestante": 0.75, "AjusteCentral": 1.15,"AjusteFundoBG": 1.1, "t":41, "t_ideal": 6,  "inct_rt": 1.370, "inct_rc": 1.149, "inct_f0": 1.195, "inct_fbg": 1.034}
+}
