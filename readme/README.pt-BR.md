@@ -24,7 +24,7 @@ O estudo associado utiliza nove redes neurais profundas pré-treinadas para extr
 
 O BATEIA-1 combina perfis de King e aprendizado de máquina para estimar **densidade central (`f0`), raio do núcleo (`Rc`), raio de maré (`Rt`) e densidade de fundo (`fbg`)**.
 
-<p align="center"><img src="../readme/assets/bateia-diagram.png" alt="BATEIA-1 pipeline" width="1100"></p>
+<p align="center"><img src="../bateia-diagram.png" alt="BATEIA-1 pipeline" width="1100"></p>
 
 Das coordenadas estelares preparadas às imagens, aumento de dados sintéticos, características visuais e regressão de parâmetros. A IA Explicável oferece um diagnóstico paralelo das extratoras.
 

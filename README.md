@@ -24,7 +24,7 @@ The associated study uses nine pretrained deep neural networks for visual featur
 
 BATEIA-1 combines King profiles with machine learning to estimate **central density (`f0`), core radius (`Rc`), tidal radius (`Rt`) and background density (`fbg`)**.
 
-<p align="center"><img src="readme/assets/bateia-diagram.png" alt="BATEIA-1 pipeline" width="1100"></p>
+<p align="center"><img src="bateia-diagram.png" alt="BATEIA-1 pipeline" width="1100"></p>
 
 From prepared stellar coordinates to cluster images, synthetic augmentation, visual features and parameter regression. Explainable AI provides a parallel diagnostic of the extractors.
 
