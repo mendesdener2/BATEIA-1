@@ -1,3 +1,7 @@
+[English](USAGE.md) · [Português (Brasil)](USAGE.pt-BR.md) · [Español](USAGE.es.md)
+
+[← README](README.es.md)
+
 # Instalación, datos y uso
 
 [← README](README.es.md)
@@ -99,13 +103,13 @@ Cada cúmulo recibe contenido generado en `Posicoes/`, `Target/`, `CNN/` y `Sint
 
 | Recurso | Contenido |
 | --- | --- |
-| [Arquitectura](../readme/ARQUITETURA.md) | Módulos y estructura del proyecto |
-| [Guía de modelos](../readme/MODELS_GUIDE.md) | GAP, regresores y optimización |
-| [Paralelismo en GPUs](../readme/PARALELISMO-GPUS.md) | Rutas existentes para varias GPUs |
+| [Arquitectura](ARCHITECTURE.es.md) | Módulos y estructura del proyecto |
+| [Guía de modelos](MODELS_GUIDE.es.md) | GAP, regresores y optimización |
+| [Paralelismo en GPUs](GPU_PARALLELISM.es.md) | Rutas existentes para varias GPUs |
 | [Entorno](../environment.yml) | Dependencias declaradas |
 | [Artículo](https://doi.org/10.1016/j.ascom.2026.101119) · [Tesis de maestría](http://urlib.net/8JMKD2USNRW34T/4FFHT62) | Metodología científica y bibliografía |
 
-Las guías técnicas existentes están en portugués. Consulte el código cuando difieran del menú actual.
+Las guías técnicas están disponibles en inglés, portugués brasileño y español. Use el selector al inicio de cada guía. Consulte el código cuando difiera del menú documentado.
 
 | Síntoma | Primera comprobación |
 | --- | --- |

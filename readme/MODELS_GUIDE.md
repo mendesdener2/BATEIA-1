@@ -1,37 +1,41 @@
-# Guia de Modelos e Treinamento BATEIA 🧠
+[English](MODELS_GUIDE.md) · [Português (Brasil)](MODELS_GUIDE.pt-BR.md) · [Español](MODELS_GUIDE.es.md)
 
-Este guia detalha as escolhas técnicas de arquitetura e a lógica de treinamento utilizada no projeto.
+[← README](../README.md)
 
----
+# Models and optimization
 
-## 1. Global Average Pooling (GAP)
-A maior distinção no treinamento dos modelos sequenciais (LSTM, GRU, 1D-CNN) é o tratamento do GAP:
+## Feature representations
 
-### COM GAP (`config.RESHAPE_CONFIG`)
-*   O extrator de características (backbone) colapsa as dimensões espaciais ($7 \times 7$) em um vetor global.
-*   O modelo sequencial recebe uma **sequência de tamanho 1**.
-*   Foco: Representação global e sintética da imagem.
+The VGG, ResNet and DenseNet extractors provide two feature modes:
 
-### SEM GAP (`config.RESHAPE_CONFIG_SEQ`)
-*   Mantemos o mapa de características espacial $7 \times 7$.
-*   Achatamos as dimensões espaciais para criar uma **sequência de 49 passos**.
-*   Foco: Relações espaciais tratadas como temporais pela rede recorrente.
+| Mode | Saved features | Sequential input |
+| --- | --- | --- |
+| GAP | `.pt` | Global vector, sequence length 1 (`config.RESHAPE_CONFIG`) |
+| No GAP | `_semgap.pt` | Spatial 7 × 7 map, sequence length 49 (`config.RESHAPE_CONFIG_SEQ`) |
 
----
+The 49 positions represent spatial locations, not physical time measurements. Match the feature suffix and extractor to the training configuration.
 
-## 2. Arquiteturas Suportadas
+## Regressors
 
-| Modelo | Implementação | Característica Principal |
-| :--- | :--- | :--- |
-| **LSTM / GRU** | `architectures.py` | Utiliza o estado oculto do último passo temporal para a predição final. |
-| **1D-CNN** | `architectures.py` | Convoluções temporais seguidas de `AdaptiveAvgPool1d(1)` para extração de invariâncias. |
-| **MLP** | `architectures.py` | Rede densa padrão para benchmarks de baixa complexidade. |
-| **SVR / RF** | `core_trainer_sklearn.py` | Modelos clássicos usados como baseline estatístico. |
+| Model | Implementation | Operation |
+| --- | --- | --- |
+| MLP | `models/architectures.py` | Dense layers with nonlinearities and dropout |
+| LSTM / GRU | `models/architectures.py` | Prediction from the last sequence-step output |
+| 1D-CNN | `models/architectures.py` | 1D convolutions followed by `AdaptiveAvgPool1d(1)` |
+| SVR / Random Forest | `models/core_trainer_sklearn.py` and model modules | scikit-learn regression |
 
----
+## Optuna workflow
 
-## 3. Fluxo de Otimização (Optuna)
-O projeto utiliza o **Optuna** para busca de hiperparâmetros:
-1.  **Trials:** Cada modelo é treinado múltiplas vezes com diferentes combinações de parâmetros (definidos em `bateia/config_data/hyperparams.py`).
-2.  **Objetivo:** Minimizar o RMSE de validação no conjunto estratificado.
-3.  **Finalização:** Os melhores parâmetros de cada rodada são salvos e usados para o treinamento do "Modelo Final" que será avaliado contra o conjunto de Teste Único (`n_test=1`).
+1. Load features and target values for the chosen cluster split.
+2. Evaluate hyperparameters from `bateia/config_data/hyperparams.py`, minimizing the validation objective (RMSE in the model objectives).
+3. Use the best configuration for final training and evaluate on the selected test set. Preserve the corresponding input/output scalers alongside the model.
+
+The menu currently sets `config_geral_treino['n_trials']` to **1**. Increase the configured budget if a broader search is intended; multiple trials are not guaranteed by simply starting the menu. Training and epoch constants are configured separately.
+
+## Evaluation scope
+
+- **AM:** explicit cluster-level train/validation/test separation. The manual option uses 15 training and 4 validation clusters, with remaining clusters assigned to test; the stratified option lets you select test clusters and uses a 70/30 development split, subject to group-size constraints.
+- **BM:** uses all data; results do not establish generalization to unseen clusters.
+- A single test cluster is not a universal requirement of the current menu.
+
+The article evaluates MLP and SVR; the dissertation/source include further regressors. See [usage](USAGE.md) for data requirements and [parallelism](GPU_PARALLELISM.md) for execution settings.

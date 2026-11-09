@@ -1,65 +1,40 @@
-# Guia de Paralelismo: GPU e CPU (BATEIA)
+[English](GPU_PARALLELISM.md) · [Português (Brasil)](PARALELISMO-GPUS.md) · [Español](GPU_PARALLELISM.es.md)
 
-Este documento explica como utilizar a nova arquitetura de paralelismo do projeto BATEIA, baseada em **Optuna JournalStorage**. Esta implementação permite que múltiplos processos (terminais) colaborem na mesma otimização de hiperparâmetros sem a necessidade de bancos de dados complexos como PostgreSQL.
+[← README](README.pt-BR.md)
 
----
+# Paralelismo em GPU e CPU
 
-## 1. Como funciona o novo sistema?
-Substituímos o banco de dados SQLite (`.db`) pelo **JournalStorage** (`.log`). 
-- **Vantagem:** Permite que vários processos escrevam e leiam o progresso simultaneamente sem erros de "Database locked".
-- **Resiliência:** Se uma execução for interrompida, basta rodar novamente; o sistema retoma do ponto onde parou.
+## Comece com um processo
 
----
-
-## 2. Cenário: 1 GPU (Padrão e Seguro)
-Se você tem apenas uma GPU e deseja rodar o treinamento da forma mais estável possível:
-
-**Comando:**
-```bash
+```sh
 python bateia_exec.py
 ```
-**O que acontece:**
-- As Redes Neurais (CNN, LSTM, GRU, MLP) rodarão uma por uma sequencialmente na GPU.
-- Os modelos de Machine Learning (SVR, RF) usarão **todos os núcleos da sua CPU** automaticamente em paralelo.
 
----
+O menu distribui as etapas 1–4 de análise por aproximadamente 85% dos núcleos CPU disponíveis. A extração pode dividir aglomerados entre GPUs visíveis quando há mais de uma GPU e aglomerado. Mapas de calor seguem um caminho sequencial separado. O treinamento depende do regressor e da configuração; nem todo modelo usa automaticamente todos os núcleos ou GPUs.
 
-## 3. Cenário: 2 ou mais GPUs (Alta Performance)
-Se você tem múltiplas GPUs físicas, pode distribuir o trabalho entre elas para terminar a otimização muito mais rápido.
+## Selecione uma GPU
 
-**Terminal 1 (GPU 0):**
-```bash
-# No Windows (PowerShell):
-$env:CUDA_VISIBLE_DEVICES="0"; python bateia_exec.py
+Defina a visibilidade antes de iniciar Python. Nos exemplos, GPU 0 é o dispositivo físico exposto; use 1 para expor a GPU 1.
 
-# No Linux:
+```powershell
+# Windows PowerShell
+$env:CUDA_VISIBLE_DEVICES = "0"
+python bateia_exec.py
+```
+
+```sh
+# Shell Linux/macOS, quando houver configuração CUDA compatível
 CUDA_VISIBLE_DEVICES=0 python bateia_exec.py
 ```
 
-**Terminal 2 (GPU 1):**
-```bash
-# No Windows (PowerShell):
-$env:CUDA_VISIBLE_DEVICES="1"; python bateia_exec.py
+Isso restringe visibilidade; não configura treinamento distribuído por si só. Vários terminais na mesma GPU compartilham VRAM e podem esgotar a memória.
 
-# No Linux:
-CUDA_VISIBLE_DEVICES=1 python bateia_exec.py
-```
+## Journals Optuna e retomada
 
-**Por que funciona?**
-Como ambos os terminais apontam para o mesmo arquivo de log do Optuna, o **Terminal 1** verá que a "Trial 1" já começou e pulará automaticamente para a "Trial 2", enquanto o **Terminal 2** assume a "Trial 3", e assim por diante.
+Os dois backends usam `JournalStorage` com `JournalFileBackend` e `load_if_exists=True`. Reutilizar um estudo exige o mesmo caminho do journal e nome do estudo, que incorporam identificadores de execução/tarefa. Confira caminhos e identificadores antes de supor que dois terminais compartilham um estudo.
 
----
+O journal registra progresso dos trials, mas não é um checkpoint automático de cada época em andamento. Execuções concorrentes também podem gravar nos mesmos modelos/scalers/relatórios finais. Iniciar menus iguais em vários terminais não constitui uma receita verificada de treinamento paralelo completo, nem garante aceleração.
 
-## 4. Cenário: 1 GPU com Múltiplos Terminais
-Se os seus modelos forem leves (como MLP) e você quiser tentar rodar dois ao mesmo tempo na **mesma GPU** para aproveitar o tempo de espera de I/O:
+Use `nvidia-smi`, quando disponível, para inspecionar memória e processos. Revise carga, `n_trials` e configuração CPU antes de ampliar a execução. Preserve journals para retomar; remover um journal descarta o histórico de otimização. Nenhum benchmark multi-GPU foi executado para este guia.
 
-1. Abra dois terminais.
-2. Rode `python bateia_exec.py` em ambos.
-
-**Atenção:** Isso dividirá a memória da sua GPU (VRAM). Se o modelo for grande, ambos os scripts podem falhar com erro de "Out of Memory" (OOM). Use com cautela!
-
----
-
-## 5. Resumo de Comandos Úteis
-- **Limpar Progresso:** Para começar uma otimização do zero, exclua o arquivo `*_optuna_journal.log` na pasta de resultados do modelo.
-- **Verificar GPUs:** Use o comando `nvidia-smi` para monitorar o uso de memória e processos em cada placa.
+Consulte [modelos](MODELS_GUIDE.pt-BR.md) e [uso](USAGE.pt-BR.md).

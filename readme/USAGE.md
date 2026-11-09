@@ -1,3 +1,7 @@
+[English](USAGE.md) · [Português (Brasil)](USAGE.pt-BR.md) · [Español](USAGE.es.md)
+
+[← README](../README.md)
+
 # Installation, data and usage
 
 [← README](../README.md)
@@ -99,13 +103,13 @@ Each cluster receives generated content in `Posicoes/`, `Target/`, `CNN/` and `S
 
 | Resource | Content |
 | --- | --- |
-| [Architecture](../readme/ARQUITETURA.md) | Modules and project structure |
-| [Model guide](../readme/MODELS_GUIDE.md) | GAP, regressors and optimization |
-| [GPU parallelism](../readme/PARALELISMO-GPUS.md) | Existing multi-GPU execution paths |
+| [Architecture](ARCHITECTURE.md) | Modules and project structure |
+| [Model guide](MODELS_GUIDE.md) | GAP, regressors and optimization |
+| [GPU parallelism](GPU_PARALLELISM.md) | Existing multi-GPU execution paths |
 | [Environment](../environment.yml) | Declared dependencies |
 | [Article](https://doi.org/10.1016/j.ascom.2026.101119) · [Dissertation](http://urlib.net/8JMKD2USNRW34T/4FFHT62) | Scientific methodology and bibliography |
 
-The existing technical guides are in Portuguese. Consult the source when they differ from the current menu.
+The technical guides are available in English, Brazilian Portuguese and Spanish. Use the language selector at the top of each guide. Consult the source when it differs from the documented menu.
 
 | Symptom | First check |
 | --- | --- |

@@ -1,4 +1,4 @@
-<p align="center"><img src="logo-bateia.png" alt="BATEIA-1 logo" width="220"></p>
+<p align="center"><img src="logo-bateia.png" alt="BATEIA-1 logo" width="330"></p>
 
 <p align="center"><a href="README.md">English</a> · <a href="readme/README.pt-BR.md">Português (Brasil)</a> · <a href="readme/README.es.md">Español</a></p>
 
@@ -8,7 +8,16 @@
 
 Estimate the structural parameters of open star clusters from stellar maps using synthetic data, pretrained visual feature extractors and regression.
 
-[Pipeline](#pipeline) · [Examples](#examples) · [Quick start](#start) · [Documentation](#docs) · [Citation](#citation)
+<a id="overview"></a>
+## Scientific overview
+
+Open star clusters are natural laboratories for studying stellar evolution and Galactic structure. BATEIA-1 estimates their structural parameters by combining the analytical King profile with machine learning and deep learning applied to stellar sky maps derived from Gaia DR3 astrometric and photometric data. It targets central stellar density, core radius, tidal radius and background stellar density, providing a data-driven approach to automate cluster structure characterization.
+
+The associated study uses nine pretrained deep neural networks for visual feature extraction, followed by Multilayer Perceptron (MLP) and Support Vector Regression (SVR) models. For M67, NGC 188 and NGC 6811, the article reports differences from literature values of **0.7–12.8% for tidal radius, 1.1–5.5% for core radius and 1.1–8.7% for central density**. Score-CAM and Ablation-CAM provide complementary diagnostics of the visual extractors. These results refer to the study's experiments; the method inherits the assumptions of its King-profile reference labels. See the [article](https://doi.org/10.1016/j.ascom.2026.101119) for the evaluation and scope.
+
+**Keywords:** open star clusters; astrophysics; Galactic structure; Gaia DR3; structural parameters; King profile; King function; stellar density; machine learning; deep learning; feature extraction; regression; explainable artificial intelligence (XAI); Score-CAM; Ablation-CAM.
+
+[Overview](#overview) · [Pipeline](#pipeline) · [Examples](#examples) · [Quick start](#start) · [Documentation](#docs) · [Citation](#citation)
 
 <a id="pipeline"></a>
 ## Pipeline
@@ -27,16 +36,16 @@ From prepared stellar coordinates to cluster images, synthetic augmentation, vis
 
 <table>
 <tr><th>Stellar map</th><th>Synthetic overview</th></tr>
-<tr><td><img src="readme/assets/M67_stars.jpg" alt="M67 stellar map" width="460"></td><td><img src="readme/assets/M67_synthetics_overview.jpg" alt="M67 synthetic overview" width="460"></td></tr>
+<tr><td><img src="readme/assets/M67_stars.jpg" alt="M67 stellar map" width="230"></td><td><img src="readme/assets/M67_synthetics_overview.jpg" alt="M67 synthetic overview" width="230"></td></tr>
 </table>
 
 M67 stellar positions (left) and the synthetic overview (right). Black points and the magenta overlay show the real distribution and synthetic sample overview, respectively; the overlay is not an observational image.
 
-<p align="center"><img src="readme/assets/king_uncertainty_M67_AM.jpg" alt="M67 King profile: BATEIA-1 and literature" width="680"></p>
+<p align="center"><img src="readme/assets/king_uncertainty_M67_AM.jpg" alt="M67 King profile: BATEIA-1 and literature" width="340"></p>
 
 M67 radial density profile: BATEIA-1 fit (blue dashed line), data points (black) and the literature uncertainty band from Angelo et al. (grey). This illustrates one result, not an aggregate performance measure.
 
-<p align="center"><img src="readme/assets/heatmap_densenet_m67.jpg" alt="M67 DenseNet: Score-CAM and Ablation-CAM" width="620"></p>
+<p align="center"><img src="readme/assets/heatmap_densenet_m67.jpg" alt="M67 DenseNet: Score-CAM and Ablation-CAM" width="310"></p>
 
 DenseNet explainability for M67: input maps, Score-CAM and Ablation-CAM for DenseNet121, DenseNet161 and DenseNet201. Colours show the spatial responses of the visualization methods; these diagnostics do not by themselves establish physical causality.
 
@@ -82,10 +91,10 @@ Start with one cluster to inspect preprocessing. The documented manual training 
 ## Documentation
 
 - [Installation, data and usage](readme/USAGE.md)
-- [Architecture](readme/ARQUITETURA.md)
+- [Architecture](readme/ARCHITECTURE.md)
 - [Models and optimization](readme/MODELS_GUIDE.md)
-- [GPU parallelism](readme/PARALELISMO-GPUS.md)
-- [Dependencies](environment.yml)
+- [GPU parallelism](readme/GPU_PARALLELISM.md)
+- [Dependencies](readme/DEPENDENCIES.md)
 
 <a id="citation"></a>
 ## Citation

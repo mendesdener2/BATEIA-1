@@ -1,4 +1,4 @@
-<p align="center"><img src="../logo-bateia.png" alt="BATEIA-1 logo" width="220"></p>
+<p align="center"><img src="../logo-bateia.png" alt="BATEIA-1 logo" width="330"></p>
 
 <p align="center"><a href="../README.md">English</a> · <a href="../readme/README.pt-BR.md">Português (Brasil)</a> · <a href="../readme/README.es.md">Español</a></p>
 
@@ -8,7 +8,16 @@
 
 Estime parámetros estructurales de cúmulos estelares abiertos a partir de mapas estelares, con datos sintéticos, extractores visuales preentrenados y regresión.
 
-[Flujo](#pipeline) · [Ejemplos](#examples) · [Inicio rápido](#start) · [Documentación](#docs) · [Cita](#citation)
+<a id="overview"></a>
+## Resumen científico
+
+Los cúmulos estelares abiertos son laboratorios naturales para estudiar la evolución estelar y la estructura galáctica. BATEIA-1 estima sus parámetros estructurales combinando el perfil analítico de King con aprendizaje automático y aprendizaje profundo aplicados a mapas estelares derivados de datos astrométricos y fotométricos de Gaia DR3. La metodología estima densidad estelar central, radio del núcleo, radio de marea y densidad estelar de fondo, con el objetivo de automatizar la caracterización estructural de los cúmulos.
+
+El estudio asociado utiliza nueve redes neuronales profundas preentrenadas para extraer características visuales, seguidas de modelos Multilayer Perceptron (MLP) y Support Vector Regression (SVR). Para M67, NGC 188 y NGC 6811, el artículo presenta diferencias respecto a la literatura de **0,7–12,8% en el radio de marea, 1,1–5,5% en el radio del núcleo y 1,1–8,7% en la densidad central**. Score-CAM y Ablation-CAM ofrecen diagnósticos complementarios de los extractores visuales. Estos resultados corresponden a los experimentos del estudio; el método conserva las hipótesis de las etiquetas de referencia basadas en perfiles de King. Consulte el [artículo](https://doi.org/10.1016/j.ascom.2026.101119) para la evaluación y el alcance.
+
+**Palabras clave:** cúmulos estelares abiertos; astrofísica; estructura galáctica; Gaia DR3; parámetros estructurales; perfil de King; función de King; densidad estelar; aprendizaje automático; aprendizaje profundo; extracción de características; regresión; inteligencia artificial explicable (XAI); Score-CAM; Ablation-CAM.
+
+[Resumen](#overview) · [Flujo](#pipeline) · [Ejemplos](#examples) · [Inicio rápido](#start) · [Documentación](#docs) · [Cita](#citation)
 
 <a id="pipeline"></a>
 ## Pipeline
@@ -27,16 +36,16 @@ De las coordenadas estelares preparadas a imágenes, aumento de datos sintético
 
 <table>
 <tr><th>Mapa estelar</th><th>Vista de sintéticos</th></tr>
-<tr><td><img src="../readme/assets/M67_stars.jpg" alt="M67 stellar map" width="460"></td><td><img src="../readme/assets/M67_synthetics_overview.jpg" alt="M67 synthetic overview" width="460"></td></tr>
+<tr><td><img src="../readme/assets/M67_stars.jpg" alt="M67 stellar map" width="230"></td><td><img src="../readme/assets/M67_synthetics_overview.jpg" alt="M67 synthetic overview" width="230"></td></tr>
 </table>
 
 Posiciones estelares de M67 (izquierda) y vista de los sintéticos (derecha). Los puntos negros y la superposición magenta muestran la distribución real y la vista de la muestra sintética, respectivamente; la superposición no es una imagen observacional.
 
-<p align="center"><img src="../readme/assets/king_uncertainty_M67_AM.jpg" alt="M67 King profile: BATEIA-1 and literature" width="680"></p>
+<p align="center"><img src="../readme/assets/king_uncertainty_M67_AM.jpg" alt="M67 King profile: BATEIA-1 and literature" width="340"></p>
 
 Perfil de densidad radial de M67: ajuste BATEIA-1 (azul discontinuo), puntos de datos (negro) y banda de incertidumbre bibliográfica de Angelo et al. (gris). Ilustra un resultado, no una medida agregada de rendimiento.
 
-<p align="center"><img src="../readme/assets/heatmap_densenet_m67.jpg" alt="M67 DenseNet: Score-CAM and Ablation-CAM" width="620"></p>
+<p align="center"><img src="../readme/assets/heatmap_densenet_m67.jpg" alt="M67 DenseNet: Score-CAM and Ablation-CAM" width="310"></p>
 
 Explicabilidad DenseNet para M67: mapas de entrada, Score-CAM y Ablation-CAM para DenseNet121, DenseNet161 y DenseNet201. Los colores muestran respuestas espaciales de los métodos de visualización; estos diagnósticos no establecen por sí solos causalidad física.
 
@@ -82,10 +91,10 @@ Empiece con un cúmulo para inspeccionar el preprocesamiento. La división manua
 ## Documentación
 
 - [Instalación, datos y uso](USAGE.es.md)
-- [Arquitectura](../readme/ARQUITETURA.md)
-- [Modelos y optimización](../readme/MODELS_GUIDE.md)
-- [Paralelismo en GPUs](../readme/PARALELISMO-GPUS.md)
-- [Dependencias](../environment.yml)
+- [Arquitectura](../readme/ARCHITECTURE.es.md)
+- [Modelos y optimización](../readme/MODELS_GUIDE.es.md)
+- [Paralelismo en GPUs](../readme/GPU_PARALLELISM.es.md)
+- [Dependencias](../readme/DEPENDENCIES.es.md)
 
 <a id="citation"></a>
 ## Cita
