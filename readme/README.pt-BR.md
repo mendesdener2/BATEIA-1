@@ -1,187 +1,99 @@
-<p align="center">
-  <img src="../logo-bateia.png" alt="BATEIA logo" width="280">
-</p>
+<p align="center"><img src="../logo-bateia.png" alt="BATEIA-1 logo" width="220"></p>
 
-<p align="center">
-  <a href="../README.md">English</a> ·
-  <a href="../readme/README.pt-BR.md">Português (Brasil)</a> ·
-  <a href="../readme/README.es.md">Español</a>
-</p>
+<p align="center"><a href="../README.md">English</a> · <a href="../readme/README.pt-BR.md">Português (Brasil)</a> · <a href="../readme/README.es.md">Español</a></p>
 
-# BATEIA
+# BATEIA-1
 
 **Balanced ArTificial-intelligence Method for EstImating parameters of stAr clusters**
 
-Software de pesquisa para estimar parâmetros estruturais de aglomerados estelares abertos a partir de mapas estelares, combinando perfis de King, dados sintéticos, extratoras visuais pré-treinadas e regressão.
+Estime parâmetros estruturais de aglomerados estelares abertos a partir de mapas estelares, usando dados sintéticos, extratoras visuais pré-treinadas e regressão.
 
-[Visão geral](#overview) · [Instalação](#installation) · [Dados e modelos](#data) · [Primeiro uso](#usage) · [Documentação](#docs) · [Referências](#references)
+[Pipeline](#pipeline) · [Exemplos](#examples) · [Início rápido](#start) · [Documentação](#docs) · [Citação](#citation)
 
-> **Interface atual:** programa Python local e interativo, iniciado com `python bateia_exec.py`. Existem módulos internos, mas uma API simplificada para notebooks/Kaggle e um fluxo de instalação como pacote ainda não estão implementados nesta versão. Um procedimento publicado de `pip install bateia` não está estabelecido aqui.
+<a id="pipeline"></a>
+## Pipeline
 
-<a id="overview"></a>
-## Dos mapas estelares aos parâmetros estruturais
+O BATEIA-1 combina perfis de King e aprendizado de máquina para estimar **densidade central (`f0`), raio do núcleo (`Rc`), raio de maré (`Rt`) e densidade de fundo (`fbg`)**.
 
-O BATEIA se destina a aglomerados abertos não imersos cuja distribuição espacial pode ser descrita por um perfil de King de componente única. As predições reproduzem ajustes de referência e preservam as hipóteses e limitações desses rótulos.
+<p align="center"><img src="../readme/assets/bateia-diagram.png" alt="BATEIA-1 pipeline" width="1100"></p>
 
-| Parâmetro no código | Grandeza física |
-| --- | --- |
-| `f0` | Densidade estelar central |
-| `Rc` | Raio do núcleo |
-| `Rt` | Raio de maré |
-| `fbg` | Densidade estelar de fundo |
+Das coordenadas estelares preparadas às imagens, aumento de dados sintéticos, características visuais e regressão de parâmetros. A IA Explicável oferece um diagnóstico paralelo das extratoras.
 
-O fluxo converte coordenadas preparadas em imagens, ajusta perfis de densidade reais, gera e analisa aglomerados sintéticos, extrai características das imagens, treina regressores com busca de hiperparâmetros pelo Optuna e exporta predições e relatórios científicos. Score-CAM e Ablation-CAM oferecem visualizações de diagnóstico.
+**Extratoras:** VGG13/16/19, ResNet50/101/152 e DenseNet121/161/201.  
+**Regressores:** MLP, SVR, Random Forest, LSTM, GRU e 1D-CNN; características com GAP e sem GAP.
 
-**No código inspecionado:** extratoras VGG13/16/19, ResNet50/101/152 e DenseNet121/161/201; regressores MLP, SVR, Random Forest, LSTM, GRU e 1D-CNN. As características podem usar média global (GAP) ou o modo sem GAP (`_semgap.pt`). O artigo estuda nove extratoras com MLP e SVR; a dissertação e o código abrangem regressores adicionais. Os experimentos publicados não validam todas as combinações do código atual. Nenhum treinamento ou benchmark foi executado para preparar este README.
+<a id="examples"></a>
+## M67: dados, resultados e explicabilidade
 
-> **Imagem futura · Visão do pipeline**  
-> Espaço reservado para um fluxo ilustrado: mapa estelar → amostra sintética → características → parâmetros. Substitua este bloco por imagem e legenda quando disponíveis.
+<table>
+<tr><th>Mapa estelar</th><th>Visão dos sintéticos</th></tr>
+<tr><td><img src="../readme/assets/M67_stars.jpg" alt="M67 stellar map" width="460"></td><td><img src="../readme/assets/M67_synthetics_overview.jpg" alt="M67 synthetic overview" width="460"></td></tr>
+</table>
 
-<a id="installation"></a>
-## Instalação passo a passo
+Posições estelares de M67 (esquerda) e visão dos sintéticos (direita). Os pontos pretos e a sobreposição magenta mostram, respectivamente, a distribuição real e a visão da amostra sintética; a sobreposição não é uma imagem observacional.
 
-### 1. Abra a pasta do projeto
+<p align="center"><img src="../readme/assets/king_uncertainty_M67_AM.jpg" alt="M67 King profile: BATEIA-1 and literature" width="680"></p>
 
-Obtenha o código completo e abra um terminal na pasta que contém `bateia_exec.py` e `environment.yml`. Para uma pasta `bateia-1` no diretório atual:
+Perfil de densidade radial de M67: ajuste BATEIA-1 (azul tracejado), pontos dos dados (preto) e faixa de incerteza da literatura de Angelo et al. (cinza). A figura ilustra um resultado, não uma medida agregada de desempenho.
 
-```sh
-cd bateia-1
-```
+<p align="center"><img src="../readme/assets/heatmap_densenet_m67.jpg" alt="M67 DenseNet: Score-CAM and Ablation-CAM" width="620"></p>
 
-O pacote de documentação sozinho não inclui o código executável. Instale Conda ou Miniconda primeiro e use um terminal em que `conda` esteja disponível. É necessário acesso à internet para dependências e, possivelmente, dados e pesos pré-treinados.
+Explicabilidade DenseNet para M67: mapas de entrada, Score-CAM e Ablation-CAM para DenseNet121, DenseNet161 e DenseNet201. As cores mostram respostas espaciais dos métodos de visualização; esses diagnósticos não estabelecem causalidade física por si só.
 
-### 2. Crie e ative o ambiente
+A abordagem se destina a aglomerados abertos não imersos descritos por perfis de King de componente única e preserva as hipóteses dos rótulos de referência. O artigo avalia MLP e SVR; a dissertação e o código abrangem regressores adicionais.
+
+<a id="start"></a>
+## Início rápido
+
+### 1. Crie o ambiente
+
+Instale Conda/Miniconda e abra um terminal na raiz do projeto:
 
 ```sh
 conda env create -f environment.yml
 conda activate bateia
 ```
 
-O arquivo solicita **Python 3.12**, dependências científicas Python, Optuna, ferramentas da API Google e componentes PyTorch. A seção pip adiciona o índice **PyTorch nightly com CUDA 12.8**, mas não fixa versões nem exige explicitamente pré-lançamentos. É uma receita de ambiente, não uma instalação travada.
+O ambiente solicita Python 3.12 e adiciona o índice PyTorch nightly com CUDA 12.8. As versões não estão travadas; GPU exige driver/distribuição compatíveis. Instalação e compatibilidade de plataformas não foram testadas para esta documentação.
 
-O uso de GPU exige driver NVIDIA e distribuição PyTorch compatíveis. O código seleciona CPU quando CUDA está indisponível, mas a execução em CPU e a compatibilidade Windows/Linux/macOS não foram testadas para esta documentação. Se a resolução falhar, examine o erro e adapte PyTorch à máquina; não há ambiente alternativo verificado aqui.
+### 2. Prepare os dados
 
-### 3. Confira o Python e a visibilidade das GPUs
+Coloque coordenadas preparadas e alvos da literatura em `database/`, ou defina `BATEIA_ROOT` para sua pasta de dados antes de iniciar Python. O treinamento também exige características geradas e alvos correspondentes. Consulte o [formato dos dados e a configuração](USAGE.pt-BR.md#data).
 
-```sh
-python --version
-python -c "import torch; print('PyTorch:', torch.__version__); print('CUDA available:', torch.cuda.is_available()); print('GPUs:', torch.cuda.device_count())"
-```
+A configuração via Google Drive exige seu próprio OAuth e acesso à pasta configurada. Pesos ImageNet das extratoras podem ser baixados no primeiro uso. Dados e regressores BATEIA treinados devem ser fornecidos separadamente; nenhum endereço público de download Zenodo foi configurado nesta documentação.
 
-Espere Python 3.12. `CUDA available: False` significa que esse interpretador não consegue usar CUDA; não identifica a causa nem valida o restante do pipeline.
-
-<a id="data"></a>
-## Prepare dados e modelos
-
-O diretório padrão é `database/`, na raiz do projeto. Opcionalmente, defina `BATEIA_ROOT` **diretamente para a pasta de dados**, antes de iniciar Python. São comandos alternativos para terminais diferentes; crie e preencha a pasta escolhida antes:
-
-```powershell
-# Windows PowerShell
-$env:BATEIA_ROOT = "C:\BATEIA-data"
-```
-
-```sh
-# Shell Linux/macOS
-export BATEIA_ROOT="/path/to/BATEIA-data"
-```
-
-Sem a variável, crie e preencha `database/`. A pasta inspecionada não inclui esse conjunto de dados nem checkpoints de regressão treinados.
-
-```text
-database/                         # ou BATEIA_ROOT
-├── cluster_params.csv
-└── <Cluster>/
-    ├── Posicoes/
-    │   └── <Cluster>_coords.dat
-    └── Target/                   # alvos gerados da literatura
-```
-
-- **Coordenadas:** uma linha de cabeçalho e seis colunas separadas por espaços: `ID`, `RAlin(J2016)`, `DEClin(J2016)`, `Gmag`, `BPmag`, `RPmag`. O conversor ignora o cabeçalho e copia as coordenadas para `X` e `Y`. Use dados preparados com a convenção do fluxo científico; a conversão não determina o centro do aglomerado nem seleciona membros Gaia de catálogos brutos arbitrários.
-- **Parâmetros da literatura:** `cluster_params.csv`, separado por vírgulas, usa `Cluster`, `f0`, `err_f0`, `Rc`, `err_Rc`, `Rt`, `err_Rt`, `fbg`, `err_fbg`. Os nomes devem corresponder aos caminhos e metadados em `bateia/config_data/clusters.py`. Preserve unidades e convenções de incerteza da referência.
-- **Google Drive:** a opção **1** do menu principal usa OAuth pelo navegador com seu próprio `credentials.json` local e mantém a autorização em `token.json`. Exige acesso à pasta configurada em `bateia/tools/gdrive_downloader.py`. O acesso público e a disponibilidade dos downloads não foram verificados. Mantenha esses arquivos pessoais fora do controle de versão e de pacotes compartilhados.
-- **Arquivos locais:** coloque entradas preparadas na estrutura acima. Os CSVs de `Target/` também precisam estar preparados. O comando que os gera fica no submenu de configuração, que atualmente autentica no Drive antes de abrir; um assistente totalmente offline não está implementado.
-- **Pesos:** as extratoras torchvision solicitam pesos ImageNet (`IMAGENET1K_V1`), que podem ser baixados para o cache PyTorch no primeiro uso. São extratoras visuais, não regressores de parâmetros BATEIA. Treine regressores pelo menu ou forneça artefatos locais compatíveis; nenhum checkpoint BATEIA hospedado é prometido.
-
-<a id="usage"></a>
-## Seu primeiro uso
-
-Execute na raiz do projeto para resolver corretamente caminhos relativos de autenticação e logs:
+### 3. Abra o menu interativo
 
 ```sh
 python bateia_exec.py
 ```
 
-Os nomes abaixo são os da aplicação; os idiomas da documentação não alteram a interface.
+1. **Setup and Data Download**: prepare parâmetros da literatura e arquivos dos aglomerados, se usar Drive.
+2. **Verify Local Clusters**: confira a detecção dos aglomerados preparados.
+3. **Run Analysis and AI Pipeline**: processe dados reais, gere/analise sintéticos e extraia características antes de treinar.
+4. **Run AI Training**: escolha modelo, modo GAP correspondente e divisão por aglomerado. Use AM para avaliar casos inéditos; BM utiliza todos os dados.
+5. **Generate Results and Paper Reports**: inspecione predições e relatórios.
 
-1. Escolha **[1] Setup and Data Download** se usar Drive. Baixe/atualize parâmetros da literatura, gere parâmetros-alvo e depois baixe os arquivos `.dat`. Isso exige sua própria conta autorizada e configuração OAuth.
-2. Escolha **[3] Verify Local Clusters** no menu principal. Confirme a detecção dos aglomerados esperados. A detecção verifica o caminho do arquivo de coordenadas, não a qualidade científica.
-3. Escolha **[2] Run Analysis and AI Pipeline → [1] Run Data Analysis Stages**. Selecione um aglomerado preparado e confirme. Execute processamento e análise real antes das etapas dependentes; depois gere/analise sintéticos e extraia características. Escolha GAP, sem GAP ou ambos quando solicitado. Mapas de calor são uma etapa opcional de análise.
-4. Com características e alvos disponíveis para uma amostra suficiente, escolha **Run AI Training** no menu de execução. Selecione um modelo e um modo de características correspondente. Use **AM Methodology (Uncontaminated)** com divisão explícita por aglomerado para avaliar casos inéditos. A divisão manual exige pelo menos 20 aglomerados (15 de treino, 4 de validação e os restantes de teste). A estratificada permite selecionar os aglomerados de teste e divide o desenvolvimento em 70/30 por perfis K-Means, sujeita a restrições de tamanho e grupos. **BM Methodology (Contaminated)** usa todos os dados e não demonstra generalização para aglomerados inéditos.
-5. Inspecione as saídas; use **[5] Generate Results and Paper Reports** quando as predições necessárias existirem. Escolha **[7] Exit** para sair.
+Comece com um aglomerado para inspecionar o pré-processamento. A divisão manual de treinamento documentada exige pelo menos 20 aglomerados. **Reset Workspace apaga dados/modelos gerados.** Consulte o [guia completo](USAGE.pt-BR.md) para dependências, divisões e saídas.
 
-Comece com um aglomerado para inspecionar o pré-processamento, não para executar a divisão de treinamento documentada. A geração sintética tem padrão de até 1.000 amostras por aglomerado. Seleções grandes podem exigir bastante tempo, RAM, VRAM e disco.
-
-**Atenção à numeração:** mapas de calor são a etapa 6 da análise, enquanto o treinamento também aparece como “Stage 6” em outras telas. Siga os nomes e dependências. **[4] Reset Workspace apaga dados/modelos gerados** conforme a operação escolhida.
-
-### Onde ficam os resultados
-
-Cada aglomerado recebe conteúdo gerado em `Posicoes/`, `Target/`, `CNN/` e `Sinteticos/`, conforme as etapas. As características sintéticas ficam em `Sinteticos/Features/<EXTRACTOR>/` (`.pt` ou `_semgap.pt`) e as tabelas de parâmetros em `Sinteticos/Resultados/`. As saídas de treinamento ficam em `Redes Neurais/`, com modelos/scalers, CSVs de predição e curvas de aprendizado em subpastas de execução/modelo. Os arquivos específicos dependem das etapas e do modelo.
-
-> **Imagem futura · Um exemplo real**  
-> Espaço para mapa do aglomerado, perfil de King ajustado e parâmetros previstos. Legenda: aglomerado, unidades, divisão dos dados, modelo e origem dos dados.
-
-> **Imagem futura · Explicabilidade**  
-> Espaço para painéis comparáveis de Score-CAM e Ablation-CAM. Identifique extratora e imagem de entrada; mapas são diagnósticos, não validação física independente.
+**Interface atual:** menu no terminal. Uma API simplificada para notebooks/Kaggle e instalação como pacote ainda não estão implementadas.
 
 <a id="docs"></a>
-## Documentação e solução de problemas
+## Documentação
 
-| Recurso | Conteúdo |
-| --- | --- |
-| [Arquitetura](../readme/ARQUITETURA.md) | Módulos e estrutura do projeto |
-| [Guia de modelos](../readme/MODELS_GUIDE.md) | GAP, regressores e otimização |
-| [Paralelismo em GPUs](../readme/PARALELISMO-GPUS.md) | Caminhos existentes para múltiplas GPUs |
-| [Ambiente](../environment.yml) | Dependências declaradas |
-| [Artigo](../artigo-bateia.pdf) · [Dissertação](../dissertacao-bateia.pdf) | Metodologia científica e bibliografia |
+- [Instalação, dados e uso](USAGE.pt-BR.md)
+- [Arquitetura](../readme/ARQUITETURA.md)
+- [Modelos e otimização](../readme/MODELS_GUIDE.md)
+- [Paralelismo em GPUs](../readme/PARALELISMO-GPUS.md)
+- [Dependências](../environment.yml)
 
-Os guias técnicos existentes estão em português. Consulte o código quando divergirem do menu atual.
+<a id="citation"></a>
+## Citação
 
-| Sintoma | Primeira verificação |
-| --- | --- |
-| `conda` não encontrado | Abra um terminal com Conda disponível após instalar. |
-| Erro de importação/dependência | Ative `bateia`; confira a instalação e o interpretador selecionado. |
-| Nenhum aglomerado encontrado | Confira `BATEIA_ROOT` e `<Cluster>/Posicoes/<Cluster>_coords.dat`. |
-| Falha no Drive | Confira OAuth, permissões da conta e pasta configurada. |
-| Características/alvos ausentes | Conclua geração/análise sintética e extração; confira modo GAP, extratora, nomes e parâmetros-alvo. |
-| Memória insuficiente | Reduza o trabalho selecionado e revise configurações de geração/treinamento. |
+Para a metodologia e os resultados experimentais, cite:
 
-### Notebooks e Kaggle
+Mendes, D. C.; Santiago Júnior, V. A.; Angelo, M. S. (2026). **BATEIA-1: An Approach for determining the structural parameters of open star clusters via machine and deep learning.** *Astronomy and Computing*, 56, 101119. [DOI](https://doi.org/10.1016/j.ascom.2026.101119).
 
-Uma biblioteca conveniente para notebooks é uma direção futura. Não há notebook Kaggle pronto, interface estável de alto nível `fit`/`predict` ou instalação suportada para notebooks nesta versão. Módulos internos exigem adaptar caminhos, dependências, autenticação e comportamento interativo/multiprocessamento. O ponto de entrada documentado continua sendo o menu no terminal.
+### Licença
 
-<a id="references"></a>
-## Referências científicas e citação
-
-As entradas foram conferidas no artigo e na dissertação fornecidos. Cite o artigo para a metodologia BATEIA-1; consulte a dissertação para o estudo ampliado de modelos.
-
-1. Mendes, D. C.; Santiago Júnior, V. A.; Angelo, M. S. (2026). **BATEIA-1: An Approach for determining the structural parameters of open star clusters via machine and deep learning**. *Astronomy and Computing*, 56, 101119. [DOI](https://doi.org/10.1016/j.ascom.2026.101119).
-2. Mendes, Dener César (2026). **BATEIA-1: An approach for determining the structural parameters of star clusters via machine and deep learning**. Master's dissertation, Applied Computing, Instituto Nacional de Pesquisas Espaciais (INPE). [INPE](http://urlib.net/8JMKD2USNRW34T/4FFHT62).
-3. King, I. (1962). **The structure of star clusters. I. An empirical density law**. *The Astronomical Journal*, 67, 471.
-4. Angelo, M. S.; Santos, J. F. C.; Corradi, W. J. B.; Maia, F. F. S. (2025). **Exploring the dynamical state of Galactic open clusters using Gaia DR3 and observational parameters**. *Monthly Notices of the Royal Astronomical Society*, 539(3), 2513–2536. [DOI](https://doi.org/10.1093/mnras/staf584).
-5. Hunt, E. L.; Reffert, S. (2024). **Improving the open cluster census. III. Using cluster masses, radii, and dynamics to create a cleaned open cluster catalogue**. *Astronomy & Astrophysics*, 686, A42.
-
-```bibtex
-@article{mendes2026bateia,
-  author  = {Mendes, Dener Cesar and Santiago Júnior, Valdivino Alexandre and Angelo, Mateus de Souza},
-  title   = {{BATEIA-1}: An Approach for determining the structural parameters of open star clusters via machine and deep learning},
-  journal = {Astronomy and Computing},
-  volume  = {56},
-  pages   = {101119},
-  year    = {2026},
-  doi     = {10.1016/j.ascom.2026.101119}
-}
-```
-
-### Licença e contribuições
-
-Não foi encontrado arquivo de licença de software no projeto inspecionado. Os avisos CC BY do artigo e CC BY-NC da dissertação aplicam-se às publicações e não estabelecem licença para o código. Esclareça os termos de reutilização com os responsáveis. Contribuições devem descrever origem dos dados, configuração, ambiente e validação; exclua credenciais e tokens privados.
+Consulte [LICENSE](../LICENSE) para o texto da GNU General Public License v3 distribuído neste repositório. Publicações e dados de terceiros têm licenças próprias.
