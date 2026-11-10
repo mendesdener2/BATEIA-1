@@ -34,7 +34,9 @@ De las coordenadas estelares preparadas a imágenes, aumento de datos sintético
 **Regresores:** MLP, SVR, Random Forest, LSTM, GRU y 1D-CNN; características con GAP y sin GAP.
 
 <a id="examples"></a>
-## M67: datos, resultados y explicabilidad
+## Ejemplo de aplicación: M67
+
+Las figuras siguientes ilustran el flujo de BATEIA-1 usando M67 como ejemplo de aplicación, desde mapas estelares y datos sintéticos hasta perfiles de densidad radial y diagnósticos de explicabilidad. Presentan resultados representativos del estudio asociado; las instrucciones para analizar su propio cúmulo están en la [guía de datos propios](CUSTOM_DATA.es.md).
 
 ### Mapas estelares y división radial
 

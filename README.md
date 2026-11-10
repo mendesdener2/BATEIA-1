@@ -34,7 +34,9 @@ From prepared stellar coordinates to cluster images, synthetic augmentation, vis
 **Regressors:** MLP, SVR, Random Forest, LSTM, GRU and 1D-CNN; GAP and no-GAP feature modes.
 
 <a id="examples"></a>
-## M67: data, results and explainability
+## Worked example: M67
+
+The following figures illustrate the BATEIA-1 workflow using M67 as a worked example, from stellar maps and synthetic data to radial density profiles and explainability diagnostics. They show representative results from the associated study; instructions for analysing your own cluster are provided in the [custom-data guide](readme/CUSTOM_DATA.md).
 
 ### Stellar maps and radial binning
 
