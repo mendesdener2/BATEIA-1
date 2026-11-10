@@ -18,6 +18,10 @@ Use cúmulos abiertos no embebidos compatibles con el dominio de entrenamiento y
 
 ## 2. Instale y localice los archivos
 
+**Recursos publicados:** [Dataset BATEIA-1](https://doi.org/10.5281/zenodo.24087976) · [Modelos entrenados y scalers](https://doi.org/10.5281/zenodo.24094057). Para el ejemplo de inferencia directa, descargue modelos/scalers y prepare sus coordenadas; no necesita todo el dataset de entrenamiento para predecir un nuevo cúmulo. Use el dataset al reproducir o reentrenar los experimentos.
+
+Descargue y extraiga manualmente los archivos necesarios, conservando nombres y estructura interna. El árbol siguiente describe la colección de investigación inspeccionada; localice `Redes Neurais` si la extracción añade otra carpeta externa. No deduzca nombres de descarga a partir del DOI ni renombre artefactos históricos para imitar salidas actuales.
+
 Siga la [instalación](USAGE.es.md#installation), active `bateia` y ejecute desde la raíz del repositorio. Use la misma sesión Python o kernel en los pasos 4–7. Defina `BATEIA_ROOT` antes de importar `bateia`; reinicie si ya lo importó con otra raíz. El uso en notebook exige esta preparación manual y no implica una API empaquetada.
 
 Separe los modelos de sus datos observacionales. Los ejemplos requieren la **subcarpeta `Redes Neurais`**, no la carpeta externa de descarga. Los `.joblib`/`.pkl` antiguos necesitan versiones compatibles de scikit-learn/joblib y pueden ejecutar código serializado; use los artefactos confiables del autor. La receta Conda actual no demuestra compatibilidad con el archivo histórico.
@@ -278,4 +282,4 @@ Esta ruta difiere de aplicar modelos guardados. Añada el cúmulo a `PARAMETROS_
 
 ## 12. Registre la procedencia
 
-Conserve DOI/versión de datos y modelos cuando se publiquen, commit, rutas/checksums exactos, entorno, centro, convención de coordenadas, filtros, características, división y tabla de valores brutos/finales. Esta guía no inventa URLs, benchmarks ni predicciones validadas. Consulte [uso](USAGE.es.md), [modelos](MODELS_GUIDE.es.md), [arquitectura](ARCHITECTURE.es.md) y [dependencias](DEPENDENCIES.es.md).
+Registre el [DOI del dataset](https://doi.org/10.5281/zenodo.24087976) y el [DOI de modelos](https://doi.org/10.5281/zenodo.24094057), archivos/versiones descargados, commit, rutas/checksums, entorno, centro, convención de coordenadas, filtros, características, división y predicciones brutas/finales. Los ejemplos siguen siendo flujos comprobados contra el código, no resultados de nuevos cúmulos validados independientemente. Consulte [uso](USAGE.es.md), [modelos](MODELS_GUIDE.es.md), [arquitectura](ARCHITECTURE.es.md) y [dependencias](DEPENDENCIES.es.md).

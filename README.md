@@ -8,6 +8,8 @@
 
 Estimate the structural parameters of open star clusters from stellar maps using synthetic data, pretrained visual feature extractors and regression.
 
+[Dataset](https://doi.org/10.5281/zenodo.24087976) · [Trained models and scalers](https://doi.org/10.5281/zenodo.24094057)
+
 <a id="overview"></a>
 ## Scientific overview
 
@@ -78,9 +80,16 @@ The environment requests Python 3.12 and adds the PyTorch nightly CUDA 12.8 inde
 
 ### 2. Prepare the data
 
-Place prepared coordinates and literature targets in `database/`, or set `BATEIA_ROOT` to your data directory before launching Python. Training also requires generated features and matching targets. See the [data format and setup guide](readme/USAGE.md#data).
+| Material | Persistent identifier | Purpose |
+| --- | --- | --- |
+| Dataset | [10.5281/zenodo.24087976](https://doi.org/10.5281/zenodo.24087976) | Research dataset for the BATEIA-1 experiments |
+| Trained models and scalers | [10.5281/zenodo.24094057](https://doi.org/10.5281/zenodo.24094057) | Saved regressors and associated scalers |
 
-The Google Drive setup route requires your own OAuth configuration and access to the configured folder. ImageNet extractor weights may download on first use. Data and trained BATEIA regressors must be supplied separately; no public Zenodo download URL has been configured in this documentation.
+Download the [dataset](https://doi.org/10.5281/zenodo.24087976) to work with the published sample, or prepare your own stellar coordinates using the [custom-data guide](readme/CUSTOM_DATA.md). Obtain the [trained models and scalers](https://doi.org/10.5281/zenodo.24094057) when applying saved regressors; retraining is a separate workflow.
+
+Place the cluster directories under `database/`, or set `BATEIA_ROOT` to the data directory that directly contains them. Keep the model archive in a separate location and preserve model/scaler filenames. See [data layout and setup](readme/USAGE.md#data).
+
+Downloads from Zenodo are manual: **Setup and Data Download** remains the Google Drive route and does not download these DOI records. That route requires your own OAuth configuration and folder access. ImageNet extractor weights are separate and may download on first use.
 
 ### 3. Open the interactive menu
 
@@ -114,6 +123,8 @@ Start with one cluster to inspect preprocessing. The documented manual training 
 For the methodology and experimental results, cite:
 
 Mendes, D. C.; Santiago Júnior, V. A.; Angelo, M. S. (2026). **BATEIA-1: An Approach for determining the structural parameters of open star clusters via machine and deep learning.** *Astronomy and Computing*, 56, 101119. [DOI](https://doi.org/10.1016/j.ascom.2026.101119).
+
+When using the research data or trained artifacts, also cite the corresponding [dataset record](https://doi.org/10.5281/zenodo.24087976) and/or [model record](https://doi.org/10.5281/zenodo.24094057), identifying the files and versions used.
 
 ### License
 

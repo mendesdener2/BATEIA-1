@@ -42,6 +42,21 @@ Debe aparecer Python 3.12. `CUDA available: False` significa que este intérpret
 <a id="data"></a>
 ## Prepare datos y modelos
 
+| Material | Identificador persistente | Finalidad |
+| --- | --- | --- |
+| Dataset | [10.5281/zenodo.24087976](https://doi.org/10.5281/zenodo.24087976) | Dataset de investigación de los experimentos BATEIA-1 |
+| Modelos entrenados y scalers | [10.5281/zenodo.24094057](https://doi.org/10.5281/zenodo.24094057) | Regresores guardados y scalers asociados |
+
+### Descargue y organice los recursos publicados
+
+1. Abra el registro del dataset y descargue los archivos necesarios para su experimento. Para aplicar un modelo guardado a un cúmulo propio, siga la [guía de datos propios](CUSTOM_DATA.es.md), sin suponer que necesita todo el conjunto de entrenamiento.
+2. Abra el registro de modelos y descargue el regresor, sus scalers de entrada/salida y los metadatos disponibles del experimento. Conserve rutas relativas y nombres.
+3. Extraiga archivos comprimidos, si existen. Localice la carpeta que contiene directamente los cúmulos y `cluster_params.csv` cuando corresponda; defina `BATEIA_ROOT` como esa carpeta de datos. No apunte a una carpeta que solo contiene descargas comprimidas.
+4. Localice `Redes Neurais` por separado, como en la [guía de datos propios](CUSTOM_DATA.es.md), y use su ruta extraída real en los ejemplos. Las carpetas externas añadidas al extraer no forman parte de los nombres de modelos.
+5. Registre ambos DOI, archivos/versiones y commit del código. Separe artefactos descargados de salidas de nuevos entrenamientos.
+
+Los archivos de Zenodo se obtienen manualmente. **Setup and Data Download** todavía autentica con Google Drive; no es un descargador de Zenodo. La estructura siguiente define lo que espera el código después de extraer.
+
 El directorio predeterminado es `database/` en la raíz del proyecto. Opcionalmente, defina `BATEIA_ROOT` **como la propia carpeta de datos**, antes de iniciar Python. Son comandos alternativos para distintas terminales; cree y rellene la carpeta elegida antes:
 
 ```powershell
@@ -54,7 +69,7 @@ $env:BATEIA_ROOT = "C:\BATEIA-data"
 export BATEIA_ROOT="/path/to/BATEIA-data"
 ```
 
-Sin la variable, cree y rellene `database/`. La carpeta inspeccionada no incluye ese conjunto de datos ni checkpoints de regresión entrenados.
+Los datos de investigación y regresores entrenados se distribuyen por separado en los registros Zenodo anteriores. Sin `BATEIA_ROOT`, prepare la estructura esperada bajo `database/`.
 
 ```text
 database/                         # o BATEIA_ROOT
@@ -69,7 +84,7 @@ database/                         # o BATEIA_ROOT
 - **Parámetros bibliográficos:** `cluster_params.csv`, separado por comas, usa `Cluster`, `f0`, `err_f0`, `Rc`, `err_Rc`, `Rt`, `err_Rt`, `fbg`, `err_fbg`. Los nombres deben coincidir con rutas y metadatos en `bateia/config_data/clusters.py`. Conserve unidades y convenciones de incertidumbre de referencia.
 - **Google Drive:** la opción **1** del menú principal usa OAuth en el navegador con su propio `credentials.json` local y guarda la autorización en `token.json`. Exige acceso a la carpeta configurada en `bateia/tools/gdrive_downloader.py`. No se verificaron el acceso público ni la disponibilidad de descargas. Excluya estos archivos personales del control de versiones y paquetes compartidos.
 - **Archivos locales:** coloque las entradas preparadas en la estructura anterior. Los CSV de `Target/` también deben estar preparados. Su comando de generación está en el submenú de configuración, que actualmente autentica con Drive antes de abrirse; no hay asistente completamente offline implementado.
-- **Pesos:** los extractores torchvision solicitan pesos ImageNet (`IMAGENET1K_V1`), que pueden descargarse a la caché PyTorch durante el primer uso. Son extractores visuales, no regresores de parámetros BATEIA. Entrene regresores mediante el menú o aporte artefactos locales compatibles; no se promete ningún checkpoint BATEIA alojado públicamente.
+- **Pesos:** los extractores torchvision solicitan pesos ImageNet (`IMAGENET1K_V1`), que pueden descargarse a la caché PyTorch durante el primer uso. Son extractores visuales, no regresores de parámetros BATEIA. Use los [modelos BATEIA publicados y sus scalers](https://doi.org/10.5281/zenodo.24094057) para inferencia con regresores guardados, o entrene nuevos desde el menú; consulte [inferencia con datos propios](CUSTOM_DATA.es.md).
 
 <a id="usage"></a>
 ## Su primer uso

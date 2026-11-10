@@ -18,6 +18,10 @@ Use non-embedded open clusters compatible with the training domain and single-co
 
 ## 2. Install and locate the files
 
+**Published resources:** [BATEIA-1 dataset](https://doi.org/10.5281/zenodo.24087976) · [Trained models and scalers](https://doi.org/10.5281/zenodo.24094057). For the direct inference example, download the model/scaler artifacts and prepare your own coordinates; the full training dataset is not required just to predict a new cluster. Use the dataset when reproducing or retraining the research experiments.
+
+Download and extract the required files manually, preserving filenames and internal directories. The archive tree below describes the inspected research collection; locate the actual `Redes Neurais` directory if extraction adds an outer folder. Do not infer a downloadable filename from its DOI, or rename historical artifacts to match current output patterns.
+
 Follow [installation](USAGE.md#installation), activate `bateia` and run the examples from the repository root. Use one Python session or notebook kernel for steps 4–7. Set `BATEIA_ROOT` before the first `bateia` import; restart the interpreter if it was already imported with another root. Notebook use here requires this manual setup and does not imply a packaged notebook API.
 
 Keep the downloaded model archive separate from your observational data. Do not assume the top-level archive folder is the model root: the examples require its **`Redes Neurais` subdirectory**. Loading legacy `.joblib`/`.pkl` files requires compatible scikit-learn/joblib versions and may execute serialized code; use the author's trusted artifacts. The current Conda recipe is not proof that legacy artifacts are compatible with it.
@@ -278,4 +282,4 @@ This route differs from applying a saved model. Add the cluster to `PARAMETROS_A
 
 ## 12. Record what you used
 
-Keep dataset/model DOI and version when published, code commit, exact artifact paths/checksums, environment versions, centre, coordinate convention, filters, feature settings, split and the raw/output prediction table. This guide does not invent public download URLs, benchmark results or validated new-cluster predictions. See [usage](USAGE.md), [models](MODELS_GUIDE.md), [architecture](ARCHITECTURE.md) and [dependencies](DEPENDENCIES.md).
+Record the [dataset DOI](https://doi.org/10.5281/zenodo.24087976) and [model DOI](https://doi.org/10.5281/zenodo.24094057), the exact downloaded files/versions, code commit, artifact paths/checksums, environment versions, centre, coordinate convention, filters, feature settings, split and raw/output predictions. The examples remain source-inspected workflows, not independently validated new-cluster results. See [usage](USAGE.md), [models](MODELS_GUIDE.md), [architecture](ARCHITECTURE.md) and [dependencies](DEPENDENCIES.md).

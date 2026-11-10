@@ -8,6 +8,8 @@
 
 Estime parámetros estructurales de cúmulos estelares abiertos a partir de mapas estelares, con datos sintéticos, extractores visuales preentrenados y regresión.
 
+[Dataset](https://doi.org/10.5281/zenodo.24087976) · [Modelos entrenados y scalers](https://doi.org/10.5281/zenodo.24094057)
+
 <a id="overview"></a>
 ## Resumen científico
 
@@ -78,9 +80,16 @@ El entorno solicita Python 3.12 y añade el índice PyTorch nightly con CUDA 12.
 
 ### 2. Prepare los datos
 
-Coloque coordenadas preparadas y etiquetas bibliográficas en `database/`, o defina `BATEIA_ROOT` como su carpeta de datos antes de iniciar Python. El entrenamiento también exige características generadas y etiquetas correspondientes. Consulte [formato de datos y configuración](USAGE.es.md#data).
+| Material | Identificador persistente | Finalidad |
+| --- | --- | --- |
+| Dataset | [10.5281/zenodo.24087976](https://doi.org/10.5281/zenodo.24087976) | Dataset de investigación de los experimentos BATEIA-1 |
+| Modelos entrenados y scalers | [10.5281/zenodo.24094057](https://doi.org/10.5281/zenodo.24094057) | Regresores guardados y scalers asociados |
 
-La configuración mediante Google Drive exige su propio OAuth y acceso a la carpeta configurada. Los pesos ImageNet pueden descargarse durante el primer uso. Datos y regresores BATEIA entrenados deben proporcionarse por separado; no se ha configurado ninguna URL pública de descarga Zenodo en esta documentación.
+Descargue el [dataset](https://doi.org/10.5281/zenodo.24087976) para trabajar con la muestra publicada, o prepare coordenadas propias siguiendo la [guía de datos propios](CUSTOM_DATA.es.md). Obtenga los [modelos entrenados y scalers](https://doi.org/10.5281/zenodo.24094057) para aplicar regresores guardados; reentrenar es un flujo separado.
+
+Coloque las carpetas de cúmulos bajo `database/`, o defina `BATEIA_ROOT` como la carpeta de datos que las contiene directamente. Mantenga los modelos aparte y conserve sus nombres y los de los scalers. Consulte [estructura y configuración de datos](USAGE.es.md#data).
+
+La descarga de Zenodo es manual: **Setup and Data Download** sigue siendo la vía Google Drive y no descarga estos registros DOI. Esa vía exige su propio OAuth y acceso a la carpeta configurada. Los pesos ImageNet de los extractores son independientes y pueden descargarse durante el primer uso.
 
 ### 3. Abra el menú interactivo
 
@@ -114,6 +123,8 @@ Empiece con un cúmulo para inspeccionar el preprocesamiento. La división manua
 Para la metodología y los resultados experimentales, cite:
 
 Mendes, D. C.; Santiago Júnior, V. A.; Angelo, M. S. (2026). **BATEIA-1: An Approach for determining the structural parameters of open star clusters via machine and deep learning.** *Astronomy and Computing*, 56, 101119. [DOI](https://doi.org/10.1016/j.ascom.2026.101119).
+
+Al usar datos de investigación o artefactos entrenados, cite también el [registro del dataset](https://doi.org/10.5281/zenodo.24087976) y/o el [registro de modelos](https://doi.org/10.5281/zenodo.24094057), identificando archivos y versiones utilizados.
 
 ### Licencia
 

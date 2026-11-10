@@ -4,6 +4,8 @@
 
 # Models and optimization
 
+Published BATEIA-1 regressors and their associated scalers are available in the [model record](https://doi.org/10.5281/zenodo.24094057); the [research dataset](https://doi.org/10.5281/zenodo.24087976) is a separate record. For artifact selection, preprocessing and inference examples, follow [Analyse your own stellar cluster data](CUSTOM_DATA.md). ImageNet extractor weights are distinct from these trained regressors.
+
 ## Feature representations
 
 The VGG, ResNet and DenseNet extractors provide two feature modes:

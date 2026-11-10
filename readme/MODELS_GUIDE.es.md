@@ -4,6 +4,8 @@
 
 # Modelos y optimización
 
+Los regresores BATEIA-1 y sus scalers están en el [registro de modelos](https://doi.org/10.5281/zenodo.24094057); el [dataset de investigación](https://doi.org/10.5281/zenodo.24087976) es un registro separado. Para seleccionar artefactos, preparar entradas e inferir, siga la [guía de datos propios](CUSTOM_DATA.es.md). Los pesos ImageNet de extractores son distintos de estos regresores entrenados.
+
 ## Representaciones de características
 
 Los extractores VGG, ResNet y DenseNet ofrecen dos modos:

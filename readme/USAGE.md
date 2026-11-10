@@ -42,6 +42,21 @@ Expect Python 3.12. `CUDA available: False` means this interpreter cannot use CU
 <a id="data"></a>
 ## Prepare data and models
 
+| Material | Persistent identifier | Purpose |
+| --- | --- | --- |
+| Dataset | [10.5281/zenodo.24087976](https://doi.org/10.5281/zenodo.24087976) | Research dataset for the BATEIA-1 experiments |
+| Trained models and scalers | [10.5281/zenodo.24094057](https://doi.org/10.5281/zenodo.24094057) | Saved regressors and associated scalers |
+
+### Download and organize the published resources
+
+1. Open the dataset record and download the files required for your experiment. For applying a saved model to your own cluster, follow the [custom-data guide](CUSTOM_DATA.md) instead of assuming the full training dataset is required.
+2. Open the models record and download the required regressor, its input/output scalers and the available experiment metadata. Preserve their relative paths and filenames.
+3. Extract downloaded archives, if applicable. Locate the directory that directly contains the cluster folders and `cluster_params.csv` where needed; set `BATEIA_ROOT` to that data directory. Do not point it at the directory containing compressed downloads.
+4. Locate the model archive's `Redes Neurais` directory separately, as shown in the [custom-data guide](CUSTOM_DATA.md). Use its actual extracted path in inference examples. Extra wrapper directories from extraction are not part of the model filenames.
+5. Record both DOI identifiers, the files/versions used, and the code commit. Keep downloaded artifacts separate from newly generated training outputs.
+
+Zenodo files are acquired manually. The menu's **Setup and Data Download** option still authenticates with Google Drive; it is not a Zenodo downloader. The data layout below defines what the current code expects after extraction.
+
 Data defaults to `database/` under the project root. Optionally set `BATEIA_ROOT` **to the data directory itself**, before starting Python. These are alternative shell commands; create and populate the chosen directory first:
 
 ```powershell
@@ -54,7 +69,7 @@ $env:BATEIA_ROOT = "C:\BATEIA-data"
 export BATEIA_ROOT="/path/to/BATEIA-data"
 ```
 
-Without the variable, create/populate `database/`. The inspected folder does not include that dataset or trained regression checkpoints.
+The research data and trained regressors are distributed separately through the Zenodo records above. Without `BATEIA_ROOT`, prepare the expected layout under `database/`.
 
 ```text
 database/                         # or BATEIA_ROOT
@@ -69,7 +84,7 @@ database/                         # or BATEIA_ROOT
 - **Literature parameters:** comma-separated `cluster_params.csv` uses `Cluster`, `f0`, `err_f0`, `Rc`, `err_Rc`, `Rt`, `err_Rt`, `fbg`, `err_fbg`. Names must match paths and metadata in `bateia/config_data/clusters.py`. Preserve reference units and uncertainty conventions.
 - **Google Drive:** main-menu option **1** uses browser OAuth with your own local `credentials.json` and caches authorization in `token.json`. Access to the folder configured in `bateia/tools/gdrive_downloader.py` is required. Public access and download availability were not verified. Keep these personal files out of version control and shared packages.
 - **Local files:** prepared inputs can be placed directly in the structure above. Target CSVs must also be prepared. Their population command is in the setup submenu, which currently authenticates with Drive before opening; a fully offline setup wizard is not implemented.
-- **Weights:** torchvision extractors request ImageNet weights (`IMAGENET1K_V1`), which may download to the PyTorch cache on first use. These are visual extractors, not BATEIA parameter regressors. Train regressors through the menu or supply compatible local artifacts; no hosted BATEIA checkpoint is promised.
+- **Weights:** torchvision extractors request ImageNet weights (`IMAGENET1K_V1`), which may download to the PyTorch cache on first use. These are visual extractors, not BATEIA parameter regressors. Use the [published BATEIA models and matching scalers](https://doi.org/10.5281/zenodo.24094057) for saved-regressor inference, or train new regressors through the menu; see [custom-data inference](CUSTOM_DATA.md).
 
 <a id="usage"></a>
 ## Your first run

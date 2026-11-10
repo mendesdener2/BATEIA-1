@@ -42,6 +42,21 @@ Espere Python 3.12. `CUDA available: False` significa que esse interpretador nã
 <a id="data"></a>
 ## Prepare dados e modelos
 
+| Material | Identificador persistente | Finalidade |
+| --- | --- | --- |
+| Dataset | [10.5281/zenodo.24087976](https://doi.org/10.5281/zenodo.24087976) | Dataset de pesquisa dos experimentos BATEIA-1 |
+| Modelos treinados e scalers | [10.5281/zenodo.24094057](https://doi.org/10.5281/zenodo.24094057) | Regressores salvos e scalers associados |
+
+### Baixe e organize os recursos publicados
+
+1. Abra o registro do dataset e baixe os arquivos necessários ao experimento. Para aplicar um modelo salvo a um aglomerado próprio, siga o [guia de dados próprios](CUSTOM_DATA.pt-BR.md), sem presumir que precisa baixar toda a base de treinamento.
+2. Abra o registro dos modelos e baixe o regressor, seus scalers de entrada/saída e os metadados disponíveis do experimento. Preserve caminhos relativos e nomes.
+3. Extraia arquivos compactados, se houver. Localize a pasta que contém diretamente os aglomerados e `cluster_params.csv`, quando necessário; defina `BATEIA_ROOT` para essa pasta de dados. Não aponte para a pasta que apenas contém downloads compactados.
+4. Localize separadamente `Redes Neurais`, como no [guia de dados próprios](CUSTOM_DATA.pt-BR.md), e use o caminho real extraído nos exemplos. Pastas externas acrescentadas pela extração não integram os nomes dos modelos.
+5. Registre os dois DOIs, arquivos/versões usados e o commit do código. Separe os artefatos baixados das saídas de novos treinamentos.
+
+Os arquivos do Zenodo são obtidos manualmente. **Setup and Data Download** ainda autentica no Google Drive; não é um baixador do Zenodo. A estrutura abaixo define o que o código espera após a extração.
+
 O diretório padrão é `database/`, na raiz do projeto. Opcionalmente, defina `BATEIA_ROOT` **diretamente para a pasta de dados**, antes de iniciar Python. São comandos alternativos para terminais diferentes; crie e preencha a pasta escolhida antes:
 
 ```powershell
@@ -54,7 +69,7 @@ $env:BATEIA_ROOT = "C:\BATEIA-data"
 export BATEIA_ROOT="/path/to/BATEIA-data"
 ```
 
-Sem a variável, crie e preencha `database/`. A pasta inspecionada não inclui esse conjunto de dados nem checkpoints de regressão treinados.
+Dados de pesquisa e regressores treinados são distribuídos separadamente pelos registros Zenodo acima. Sem `BATEIA_ROOT`, prepare a estrutura esperada em `database/`.
 
 ```text
 database/                         # ou BATEIA_ROOT
@@ -69,7 +84,7 @@ database/                         # ou BATEIA_ROOT
 - **Parâmetros da literatura:** `cluster_params.csv`, separado por vírgulas, usa `Cluster`, `f0`, `err_f0`, `Rc`, `err_Rc`, `Rt`, `err_Rt`, `fbg`, `err_fbg`. Os nomes devem corresponder aos caminhos e metadados em `bateia/config_data/clusters.py`. Preserve unidades e convenções de incerteza da referência.
 - **Google Drive:** a opção **1** do menu principal usa OAuth pelo navegador com seu próprio `credentials.json` local e mantém a autorização em `token.json`. Exige acesso à pasta configurada em `bateia/tools/gdrive_downloader.py`. O acesso público e a disponibilidade dos downloads não foram verificados. Mantenha esses arquivos pessoais fora do controle de versão e de pacotes compartilhados.
 - **Arquivos locais:** coloque entradas preparadas na estrutura acima. Os CSVs de `Target/` também precisam estar preparados. O comando que os gera fica no submenu de configuração, que atualmente autentica no Drive antes de abrir; um assistente totalmente offline não está implementado.
-- **Pesos:** as extratoras torchvision solicitam pesos ImageNet (`IMAGENET1K_V1`), que podem ser baixados para o cache PyTorch no primeiro uso. São extratoras visuais, não regressores de parâmetros BATEIA. Treine regressores pelo menu ou forneça artefatos locais compatíveis; nenhum checkpoint BATEIA hospedado é prometido.
+- **Pesos:** as extratoras torchvision solicitam pesos ImageNet (`IMAGENET1K_V1`), que podem ser baixados para o cache PyTorch no primeiro uso. São extratoras visuais, não regressores de parâmetros BATEIA. Use os [modelos BATEIA publicados e seus scalers](https://doi.org/10.5281/zenodo.24094057) na inferência com regressores salvos, ou treine novos pelo menu; consulte a [inferência com dados próprios](CUSTOM_DATA.pt-BR.md).
 
 <a id="usage"></a>
 ## Seu primeiro uso
